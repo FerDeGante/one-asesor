@@ -62,10 +62,10 @@ const Home = () => {
         {/* Galería de Imágenes en "Sobre Mí" */}
         <Row className="py-3 section-images animate__animated animate__fadeInUp">
           <Col xs={6} md={4} className="mb-3">
-            <img src="/assets/campeón_metalife_2024.png" alt="Campeón MetLife 2024" className="img-fluid about-img" />
+            <img src="/assets/campeon_metalife_2024.png" alt="Campeón MetLife 2024" className="img-fluid about-img" />
           </Col>
           <Col xs={6} md={4} className="mb-3">
-            <img src="/assets/campeón_vida_2024.png" alt="Campeón VIDA 2024" className="img-fluid about-img" />
+            <img src="/assets/campeon_vida_2024.png" alt="Campeón VIDA 2024" className="img-fluid about-img" />
           </Col>
           <Col xs={6} md={4} className="mb-3">
             <img src="/assets/MDRT_hola.png" alt="MDRT Hola" className="img-fluid about-img" />
