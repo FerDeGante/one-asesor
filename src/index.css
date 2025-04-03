@@ -1,0 +1,87 @@
+
+.landing-page {
+  background-color: #3d1d42;
+  color: #e8e6e7;
+  min-height: 100vh;
+}
+
+.section-header {
+  text-align: center;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+}
+
+.btn-cta {
+  background-color: #d17d5d;
+  border-color: #d17d5d;
+  color: #3d1d42;
+  font-weight: bold;
+}
+
+.section-about {
+  background-color: #4f153d;
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.section-form {
+  padding: 2rem 0;
+}
+
+/* Estilos para el formulario */
+.form-container {
+  background-color: #4f153d; /* Color secundario para el fondo del formulario */
+  border-radius: 8px;
+}
+
+.form-container .form-control {
+  background-color: #3d1d42; /* Usa el color principal para los inputs */
+  color: #e8e6e7;
+  border: 1px solid #d17d5d; /* Borde en color terciario */
+}
+
+.form-container .form-control:focus {
+  border-color: #d17d5d;
+  box-shadow: 0 0 0 0.2rem rgba(209, 125, 93, 0.25);
+}
+
+.form-container .form-floating label {
+  color: #e8e6e7;
+}
+
+/* Estilos para el botón de formulario */
+.btn-primary {
+  background-color: #d17d5d; /* Color terciario para el botón */
+  border-color: #d17d5d;
+}
+
+.btn-primary:hover {
+  background-color: #c06650;
+  border-color: #c06650;
+}
+
+/* Navbar y Footer */
+.navbar-custom {
+  background-color: #3d1d42;
+}
+
+.footer-custom {
+  background-color: #3d1d42;
+  color: white;
+}
+
+/* Si deseas un poco más de estilo global, por ejemplo: */
+.footer-custom a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-custom a:hover {
+  text-decoration: underline;
+}
