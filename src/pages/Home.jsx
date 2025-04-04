@@ -73,9 +73,7 @@ const Home = () => {
           <Col xs={6} md={4} className="mb-3">
             <img src="/assets/dudas_contactame.png" alt="¿Dudas? Contáctame" className="img-fluid about-img" />
           </Col>
-          <Col xs={6} md={4} className="mb-3">
-            <img src="/assets/one_logo_largo.jpeg" alt="One Asesor" className="img-fluid about-img" />
-          </Col>
+          
         </Row>
 
         {/* Sección de Captura de Leads (Formulario con llamada a la función serverless) */}
