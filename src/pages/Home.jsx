@@ -1,116 +1,170 @@
+// src/pages/Home.jsx
+
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, Form, FloatingLabel, Alert } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Form,
+  FloatingLabel,
+  Alert,
+  Carousel
+} from 'react-bootstrap';
+
+const imgs = [
+  'MDRT_Ezequiel.jpeg',
+  'MDRT_2024_Ezequiel.jpeg',
+  'MDRT_2023_Ezequiel.jpeg',
+  'ezequiel_oficina_3.jpeg',
+  'ezequiel_oficina_2.jpeg',
+  'creciendo_juntos_2024.jpeg',
+  'convencion_internacional_Roma_2024.jpeg',
+  'campeones_metlife_ezequiel_esposa.jpeg',
+  'campeon_metalife_2024.png'
+];
+
+// Divide el array en grupos de 3 imágenes
+const chunkImages = (arr, size = 3) => {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += size) {
+    chunks.push(arr.slice(i, i + size));
+  }
+  return chunks;
+};
 
 const Home = () => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
   const [status, setStatus] = useState(null);
 
-  // Maneja los cambios en los inputs
-  const handleChange = (e) => {
+  const handleChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
-  // Función que se ejecuta al enviar el formulario
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setStatus('loading');
     try {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
       const data = await res.json();
-      if (res.ok) {
-        setStatus('success');
-      } else {
-        setStatus(`error: ${data.error}`);
-      }
-    } catch (err) {
+      if (res.ok) setStatus('success');
+      else setStatus(`error: ${data.error}`);
+    } catch {
       setStatus('error: Error en el servidor.');
     }
   };
 
+  const slides = chunkImages(imgs, 3);
+
   return (
-    <div className="landing-page">
-      <Container>
-        {/* Sección de Encabezado con CTA */}
-        <Row className="py-5 section-header animate__animated animate__fadeInUp">
-          <Col>
-            <h1 className="title">Masterclass: Libertad Financiera 🔒</h1>
+    <>
+      {/* Hero */}
+      <Container fluid className="section-header animate__animated animate__fadeInUp">
+        <Row>
+          <Col className="text-center">
+            <h1 className="title">Masterclass: Libertad Financiera</h1>
             <p className="subtitle">
-              Descubre estrategias comprobadas para transformar tu futuro financiero. 💼✨
+              Descubre estrategias comprobadas para transformar tu futuro financiero.
             </p>
-            <Button variant="light" size="lg" className="mt-3 btn-cta">
-              ¡Quiero asegurar mi futuro! 🔒
+            <Button variant="" className="btn-cta">
+              ¡Quiero asegurar mi futuro!
             </Button>
           </Col>
         </Row>
+      </Container>
 
-        {/* Sección About Me */}
-        <Row className="py-5 section-about animate__animated animate__fadeInUp">
-          <Col md={{ span: 8, offset: 2 }} className="text-center">
-            <h2>Sobre mí</h2>
+      {/* Sobre mí */}
+      <Container className="section-about animate__animated animate__fadeInUp">
+        <Row className="align-items-center mb-4">
+          <Col md={6}>
+            <h1>Sobre mí</h1>
             <p>
-              ¡Hola! soy Ezequiel Treviño, pertenezco al exclusivo 3% de los mejores agentes financieros a nivel global y fui reconocido por mi participación en la reunión anual 2024 del Million Dollar Round Table. <strong>Soy asesor financiero y de seguros</strong>, con 8 años de experiencia, lo que garantiza que protegeré tu patrimonio y haré crecer tu dinero. En 2024 fui galardonado como Campeón Nacional VIDA por Metlife, por ello soy experto en finanzas, interés compuesto y gestión de riesgos. Mi pasión es ayudarte a alcanzar la libertad financiera que siempre has soñado. 😊
+              ¡Hola! soy <strong>Ezequiel Treviño</strong>, pertenezco al exclusivo
+              3% de los mejores agentes financieros a nivel global y fui reconocido por
+              mi participación en la reunión anual del Million Dollar Round Table MDRT 2024.
+              Con 8 años de experiencia protejo tu patrimonio y hago crecer tu dinero. En 2024
+              fui galardonado como Campeón Nacional VIDA por MetLife. Mi pasión es ayudarte a
+              alcanzar la libertad financiera que siempre has soñado.
             </p>
+            <h3>
+              <strong>
+                Por eso te invito a mi Masterclass gratuita, donde compartiré estrategias
+                comprobadas para transformar tu futuro financiero. ¡No te lo pierdas!
+              </strong>
+            </h3>
+          </Col>
+          <Col md={6} className="text-center">
+            <img
+              src="/assets/ezequiel_oficina.jpeg"
+              alt="Ezequiel en oficina"
+              className="about-main-img"
+            />
           </Col>
         </Row>
 
-        {/* Galería de Imágenes en "Sobre Mí" */}
-        <Row className="py-3 section-images animate__animated animate__fadeInUp">
-          <Col xs={6} md={4} className="mb-3">
-            <img src="/assets/campeon_metalife_2024.png" alt="Campeón MetLife 2024" className="img-fluid about-img" />
+        {/* Carousel sin fade, 3 imágenes por slide, todas del mismo tamaño */}
+        <Row>
+          <Col>
+            <Carousel interval={3000} indicators={false}>
+              {slides.map((group, idx) => (
+                <Carousel.Item key={idx}>
+                  <Row className="g-0">
+                    {group.map(img => (
+                      <Col key={img} xs={4} className="p-0">
+                        <div className="about-thumb-container">
+                          <img
+                            src={`/assets/${img}`}
+                            alt={img}
+                            className="about-thumb-img"
+                          />
+                        </div>
+                      </Col>
+                    ))}
+                  </Row>
+                </Carousel.Item>
+              ))}
+            </Carousel>
           </Col>
-          <Col xs={6} md={4} className="mb-3">
-            <img src="/assets/campeon_vida_2024.png" alt="Campeón VIDA 2024" className="img-fluid about-img" />
-          </Col>
-          <Col xs={6} md={4} className="mb-3">
-            <img src="/assets/MDRT_hola.png" alt="MDRT Hola" className="img-fluid about-img" />
-          </Col>
-          <Col xs={6} md={4} className="mb-3">
-            <img src="/assets/dudas_contactame.png" alt="¿Dudas? Contáctame" className="img-fluid about-img" />
-          </Col>
-          
         </Row>
+      </Container>
 
-        {/* Sección de Captura de Leads (Formulario con llamada a la función serverless) */}
-        <Row className="py-5 section-form animate__animated animate__fadeInUp">
-          <Col md={{ span: 6, offset: 3 }}>
-            <h3 className="text-center mb-4">Regístrate para la Masterclass</h3>
-            <div className="form-container p-4">
+      {/* Formulario */}
+      <Container className="section-form animate__animated animate__fadeInUp">
+        <Row>
+          <Col>
+            <h3 className="text-center">Regístrate para la Masterclass</h3>
+            <div className="form-container mx-auto">
               <Form onSubmit={handleSubmit}>
-                <FloatingLabel controlId="floatingName" label="Nombre Completo" className="mb-3">
+                <FloatingLabel label="Nombre Completo" className="mb-3">
                   <Form.Control
-                    type="text"
-                    placeholder="Ingresa tu nombre"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    placeholder="Nombre Completo"
                   />
                 </FloatingLabel>
-                <FloatingLabel controlId="floatingEmail" label="Correo Electrónico" className="mb-3">
+                <FloatingLabel label="Correo Electrónico" className="mb-3">
                   <Form.Control
-                    type="email"
-                    placeholder="Ingresa tu correo"
                     name="email"
+                    type="email"
                     value={formData.email}
                     onChange={handleChange}
+                    placeholder="Correo Electrónico"
                   />
                 </FloatingLabel>
-                <FloatingLabel controlId="floatingPhone" label="Teléfono" className="mb-3">
+                <FloatingLabel label="Teléfono" className="mb-3">
                   <Form.Control
-                    type="phone"
-                    placeholder="Ingresa tu teléfono"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    placeholder="Teléfono"
                   />
                 </FloatingLabel>
-                <Button variant="primary" type="submit" className="w-100">
-                  Inscribirme 🚀
+                <Button type="submit" className="btn-primary">
+                  Inscribirme
                 </Button>
               </Form>
               {status === 'loading' && (
@@ -123,7 +177,7 @@ const Home = () => {
                   ¡Inscripción exitosa!
                 </Alert>
               )}
-              {status && status.startsWith('error') && (
+              {status?.startsWith('error') && (
                 <Alert variant="danger" className="mt-3">
                   {status}
                 </Alert>
@@ -131,16 +185,8 @@ const Home = () => {
             </div>
           </Col>
         </Row>
-
-        {/* Sección de Agradecimiento */}
-        <Row className="py-5 section-thanks animate__animated animate__fadeInUp">
-          <Col className="text-center">
-            <h4>¡Gracias por visitar nuestro sitio! 🙏</h4>
-            <p>Estoy comprometido en ayudarte a transformar tu vida financiera. ¡Nos vemos en la masterclass! 🚀</p>
-          </Col>
-        </Row>
       </Container>
-    </div>
+    </>
   );
 };
 

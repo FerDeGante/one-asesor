@@ -1,87 +1,166 @@
-
-.landing-page {
-  background-color: #3d1d42;
+/* ========== Tipografías y Degradado Global ========== */
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(
+    to bottom,
+    #1e0139 0%,
+    #4f153d 15%,
+    #f6d3c5 60%,
+    #4f153d 75%,
+    #1e0139 100%
+  );
   color: #e8e6e7;
-  min-height: 100vh;
 }
 
+/* ========== Navbar ========== */
+.navbar-custom {
+  background: transparent !important;
+  justify-content: center;
+  padding: 1rem 0;
+}
+.navbar-custom.scrolled {
+  background-color: #3d1d42 !important;
+}
+
+/* ========== Hero ========== */
 .section-header {
   text-align: center;
+  padding: 6rem 1rem;
+}
+.section-header .title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+.section-header .subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+}
+.btn.btn-cta {
+  background-color: transparent !important;
+  border: 2px solid #d17d5d !important;
+  color: #ffffff !important;
+  padding: 0.5rem 1.5rem !important;
+  display: inline-block !important;
+  width: auto !important;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  transition: background 0.3s, color 0.3s;
+}
+.btn.btn-cta:hover {
+  background-color: #d17d5d !important;
+  color: #3d1d42 !important;
 }
 
-.title {
-  font-weight: bold;
-}
-
-.subtitle {
-  font-size: 1.2rem;
-}
-
-.btn-cta {
-  background-color: #d17d5d;
-  border-color: #d17d5d;
-  color: #3d1d42;
-  font-weight: bold;
-}
-
+/* ========== Sobre mí ========== */
 .section-about {
-  background-color: #4f153d;
-  text-align: center;
-  padding: 2rem 0;
+  /* eliminamos cualquier fondo extra; sólo el degradado global */
+  padding: 4rem 1rem;
 }
-
-.section-form {
-  padding: 2rem 0;
+.section-about h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.75rem;
+  color: #d17d5d;
+  margin-bottom: 1rem;
 }
+.section-about h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color:#4f153d
+}
+.section-about p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-bottom: 2rem;
+  color:#d17d5d;
 
-/* Estilos para el formulario */
-.form-container {
-  background-color: #4f153d; /* Color secundario para el fondo del formulario */
+}
+.about-main-img {
+  width: 100%;
+  max-width: 400px;
   border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
+/* Slider de miniaturas */
+.slick-slide {
+  padding: 0 0.5rem;
+}
+.g-0 {
+  --bs-gutter-x: 0 !important;
+}
+.about-thumb-container {
+  width: 100%;
+  height: 500px;       /* Ajusta según prefieras */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-thumb-img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+  transition: none !important;
+}
+
+.about-thumb-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* ========== Formulario ========== */
+.section-form {
+  padding: 4rem 1rem;
+}
+.section-form h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.25rem;
+  margin-bottom: 2rem;
+}
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
 .form-container .form-control {
-  background-color: #3d1d42; /* Usa el color principal para los inputs */
+  background-color: rgba(0,0,0,0.2);
   color: #e8e6e7;
-  border: 1px solid #d17d5d; /* Borde en color terciario */
+  border: 1px solid #d17d5d;
 }
-
 .form-container .form-control:focus {
   border-color: #d17d5d;
-  box-shadow: 0 0 0 0.2rem rgba(209, 125, 93, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(209,125,93,0.5);
 }
-
-.form-container .form-floating label {
+.form-container label {
   color: #e8e6e7;
 }
-
-/* Estilos para el botón de formulario */
 .btn-primary {
-  background-color: #d17d5d; /* Color terciario para el botón */
+  background-color: #d17d5d;
   border-color: #d17d5d;
+  width: 100%;
 }
-
 .btn-primary:hover {
   background-color: #c06650;
   border-color: #c06650;
 }
 
-/* Navbar y Footer */
-.navbar-custom {
-  background-color: #3d1d42;
-}
-
+/* ========== Footer ========== */
 .footer-custom {
-  background-color: #3d1d42;
-  color: white;
+  background: transparent !important;
+  color: #e8e6e7;
+  padding: 2rem 1rem;
 }
-
-/* Si deseas un poco más de estilo global, por ejemplo: */
+.footer-custom img {
+  object-fit: contain;
+}
 .footer-custom a {
-  color: white;
+  color: #e8e6e7;
   text-decoration: none;
 }
-
 .footer-custom a:hover {
   text-decoration: underline;
 }
