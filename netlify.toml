@@ -1,9 +1,8 @@
 [build]
   command   = "npm run build"
   publish   = "dist"
-  functions = "api"
 
-[[redirects]]
-  from = "/*"
-  to   = "/index.html"
-  status = 200
+[dev]
+  command    = "npm run dev:vite"   # arrancará Vite en dev
+  functions  = "api"                # carpeta donde vive subscribe.js
+  targetPort = 5173                 # puerto donde Vite escucha

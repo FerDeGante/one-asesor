@@ -53,7 +53,10 @@ body {
   color: #3d1d42 !important;
 }
 
-/* ========== Sobre mí ========== */
+/* ========== Sobre mí ========== */ 
+.section-about p {
+  text-align: justify;
+}
 .section-about {
   /* eliminamos cualquier fondo extra; sólo el degradado global */
   padding: 4rem 1rem;
@@ -64,8 +67,10 @@ body {
   color: #d17d5d;
   margin-bottom: 1rem;
 }
+
 .section-about h3 {
   font-family: 'Playfair Display', serif;
+  text-align: justify;
   font-size: 2rem;
   margin-bottom: 1rem;
   color:#4f153d
@@ -75,7 +80,7 @@ body {
   line-height: 1.6;
   max-width: 600px;
   margin-bottom: 2rem;
-  color:#d17d5d;
+  color:#4f153d;
 
 }
 .about-main-img {

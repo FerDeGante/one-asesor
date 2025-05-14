@@ -1,6 +1,6 @@
 // src/pages/Home.jsx
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Row,
@@ -24,8 +24,8 @@ const imgs = [
   'campeon_metalife_2024.png'
 ];
 
-// Divide el array en grupos de 3 imágenes
-const chunkImages = (arr, size = 3) => {
+// Función para dividir en grupos
+const chunkImages = (arr, size) => {
   const chunks = [];
   for (let i = 0; i < arr.length; i += size) {
     chunks.push(arr.slice(i, i + size));
@@ -33,9 +33,22 @@ const chunkImages = (arr, size = 3) => {
   return chunks;
 };
 
+// Devuelve 1 en móvil (<576px), 3 en desktop
+const getChunkSize = () => (window.innerWidth < 576 ? 1 : 3);
+
 const Home = () => {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
   const [status, setStatus] = useState(null);
+  const [chunkSize, setChunkSize] = useState(getChunkSize());
+
+  // Recalcular chunkSize al cambiar el ancho de la ventana
+  useEffect(() => {
+    const handleResize = () => setChunkSize(getChunkSize());
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const slides = chunkImages(imgs, chunkSize);
 
   const handleChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -44,10 +57,10 @@ const Home = () => {
     e.preventDefault();
     setStatus('loading');
     try {
-      const res = await fetch('/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+      const res = await fetch('/.netlify/functions/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
       });
       const data = await res.json();
       if (res.ok) setStatus('success');
@@ -56,8 +69,6 @@ const Home = () => {
       setStatus('error: Error en el servidor.');
     }
   };
-
-  const slides = chunkImages(imgs, 3);
 
   return (
     <>
@@ -105,7 +116,7 @@ const Home = () => {
           </Col>
         </Row>
 
-        {/* Carousel sin fade, 3 imágenes por slide, todas del mismo tamaño */}
+        {/* Carousel estándar, 3 en desktop / 1 en móvil */}
         <Row>
           <Col>
             <Carousel interval={3000} indicators={false}>
@@ -113,7 +124,7 @@ const Home = () => {
                 <Carousel.Item key={idx}>
                   <Row className="g-0">
                     {group.map(img => (
-                      <Col key={img} xs={4} className="p-0">
+                      <Col key={img} xs={12 / chunkSize} className="p-0">
                         <div className="about-thumb-container">
                           <img
                             src={`/assets/${img}`}
