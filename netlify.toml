@@ -1,8 +1,16 @@
+# netlify.toml
 [build]
   command   = "npm run build"
   publish   = "dist"
 
 [dev]
-  command    = "npm run dev:vite"   # arrancará Vite en dev
-  functions  = "api"                # carpeta donde vive subscribe.js
-  targetPort = 5173                 # puerto donde Vite escucha
+  command    = "npm run dev:vite"
+  functions  = "api"
+  targetPort = 5173
+
+# Este redirect hace que en producción tu front-fetch a /api/subscribe
+# se mande en realidad a /.netlify/functions/subscribe
+[[redirects]]
+  from = "/api/subscribe"
+  to = "/.netlify/functions/subscribe"
+  status = 200
