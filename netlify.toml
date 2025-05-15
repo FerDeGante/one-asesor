@@ -1,16 +1,18 @@
 # netlify.toml
+
 [build]
   command   = "npm run build"
   publish   = "dist"
+  # <-- aquí le dices a Netlify dónde están tus lambdas ¡en build también!
+  functions = "api"
 
 [dev]
   command    = "npm run dev:vite"
   functions  = "api"
   targetPort = 5173
 
-# Este redirect hace que en producción tu front-fetch a /api/subscribe
-# se mande en realidad a /.netlify/functions/subscribe
+# Redirige /api/subscribe a la función real
 [[redirects]]
-  from = "/api/subscribe"
-  to = "/.netlify/functions/subscribe"
+  from   = "/api/subscribe"
+  to     = "/.netlify/functions/subscribe"
   status = 200
