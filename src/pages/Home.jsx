@@ -38,7 +38,6 @@ const achievements = [
   'MDRT_Ezequiel.jpeg',
   'MDRT_2024_Ezequiel.jpeg',
   'MDRT_2023_Ezequiel.jpeg',
-  'ezequiel_oficina_3.jpeg',
   'creciendo_juntos_2024.jpeg',
   'convencion_internacional_Roma_2024.jpeg'
 ];
@@ -81,7 +80,7 @@ const aboutItems = [
   },
   {
     Icon: BsGlobe,
-    title: 'Nacional e internacional',
+    title: 'Conferencista nacional e internacional',
     text: 'Participo en convenciones y congresos en México, Europa y América.'
   },
   {
