@@ -1,4 +1,6 @@
-/* ========== Tipografías y Degradado Global ========== */
+/* Tipografías */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
@@ -10,162 +12,202 @@ body {
     #4f153d 75%,
     #1e0139 100%
   );
-  color: #e8e6e7;
+  color: #333;
 }
 
-/* ========== Navbar ========== */
-.navbar-custom {
-  background: transparent !important;
-  justify-content: center;
-  padding: 1rem 0;
+/* Hero */
+.section-header {
+  padding: 6rem 1rem;
 }
-.navbar-custom.scrolled {
+.section-header h1,
+.section-header p {
+  color: #fff !important;
+}
+.btn-cta {
+  background-color: #4f153d !important;
+  color: #f6d3c5 !important;
+  border: none !important;
+}
+.btn-cta:hover {
   background-color: #3d1d42 !important;
 }
 
-/* ========== Hero ========== */
-.section-header {
-  text-align: center;
-  padding: 6rem 1rem;
+/* SOBRE MÍ (fondo blanco) */
+.section-about-me {
+  padding: 4rem 2rem;
+  background: #fff;
 }
-.section-header .title {
-  font-family: 'Playfair Display', serif;
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
+/* Saludo grande */
+.about-greeting {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.75rem;
+  color: #1e0139;
+  line-height: 1.2;
 }
-.section-header .subtitle {
-  font-size: 1.25rem;
+/* Grid */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem 2rem;
   margin-bottom: 2rem;
 }
-.btn.btn-cta {
-  background-color: transparent !important;
-  border: 2px solid #d17d5d !important;
-  color: #ffffff !important;
-  padding: 0.5rem 1.5rem !important;
-  display: inline-block !important;
-  width: auto !important;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 600;
-  transition: background 0.3s, color 0.3s;
+.about-grid-item {
+  display: flex;
+  align-items: flex-start;
 }
-.btn.btn-cta:hover {
-  background-color: #d17d5d !important;
-  color: #3d1d42 !important;
-}
-
-/* ========== Sobre mí ========== */ 
-.section-about p {
-  text-align: justify;
-}
-.section-about {
-  /* eliminamos cualquier fondo extra; sólo el degradado global */
-  padding: 4rem 1rem;
-}
-.section-about h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.75rem;
-  color: #d17d5d;
-  margin-bottom: 1rem;
-}
-
-.section-about h3 {
-  font-family: 'Playfair Display', serif;
-  text-align: justify;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color:#4f153d
-}
-.section-about p {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  max-width: 600px;
-  margin-bottom: 2rem;
-  color:#4f153d;
-
-}
-.about-main-img {
-  width: 100%;
-  max-width: 400px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-/* Slider de miniaturas */
-.slick-slide {
-  padding: 0 0.5rem;
-}
-.g-0 {
-  --bs-gutter-x: 0 !important;
-}
-.about-thumb-container {
-  width: 100%;
-  height: 500px;       /* Ajusta según prefieras */
-  overflow: hidden;
+/* Círculos perfectos */
+.icon-circle {
+  width: 70px;
+  height: 70px;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  background: #f6d3c5;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 1rem;
 }
-
-.about-thumb-img {
-  max-height: 100%;
-  width: auto;
+.mdrt-logo {
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  transition: none !important;
 }
-
-.about-thumb-img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+.gpo-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
 }
-
-/* ========== Formulario ========== */
-.section-form {
-  padding: 4rem 1rem;
+.about-text h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1e0139;
+  font-family: 'Montserrat', sans-serif;
 }
-.section-form h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.25rem;
-  margin-bottom: 2rem;
+.about-text p {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: #4f153d;
+  line-height: 1.4;
 }
-.form-container {
+/* Imagen rectangular */
+.about-img-rect {
+  width: 100%;
   max-width: 500px;
-  margin: 0 auto;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-.form-container .form-control {
-  background-color: rgba(0,0,0,0.2);
-  color: #e8e6e7;
-  border: 1px solid #d17d5d;
+/* CTA interno */
+.about-cta {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+  color: #1e0139;
+  margin: 1.5rem 0 1rem;
+  text-align: left;
 }
-.form-container .form-control:focus {
-  border-color: #d17d5d;
-  box-shadow: 0 0 0 0.2rem rgba(209,125,93,0.5);
+
+/* Beneficios */
+.section-benefits {
+  padding: 4rem 1rem;
+  background: #f6d3c5;
 }
-.form-container label {
-  color: #e8e6e7;
-}
-.btn-primary {
-  background-color: #d17d5d;
-  border-color: #d17d5d;
+.benefit-card {
+  background: #fff;
+  border-radius: 16px;
+  text-align: center;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
   width: 100%;
 }
-.btn-primary:hover {
-  background-color: #c06650;
-  border-color: #c06650;
+.benefit-card:hover {
+  transform: translateY(-6px);
+}
+.benefit-icon {
+  font-size: 2.5rem;
+  color: #4f153d;
+  margin-bottom: 1rem;
 }
 
-/* ========== Footer ========== */
-.footer-custom {
-  background: transparent !important;
-  color: #e8e6e7;
-  padding: 2rem 1rem;
+/* Reconocimientos */
+.section-about .img-fluid {
+  border-radius: 8px;
 }
-.footer-custom img {
-  object-fit: contain;
+
+/* Testimonios */
+.section-testimonials {
+  padding: 4rem 1rem;
+  background: #fff;
 }
-.footer-custom a {
-  color: #e8e6e7;
-  text-decoration: none;
+.testimonial-card {
+  background: #f6d3c5;
+  border: none;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  height: 100%;
 }
-.footer-custom a:hover {
-  text-decoration: underline;
+.testimonial-img-large {
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.testimonial-icon {
+  font-size: 2.5rem;
+  color: #4f153d;
+  margin-bottom: 0.5rem;
+}
+
+/* Formulario */
+.section-form {
+  padding: 4rem 1rem;
+  background: #f6d3c5;
+}
+.form-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.form-control {
+  background: transparent;
+  border: 1px solid #4f153d;
+}
+.form-control:focus {
+  border-color: #4f153d;
+  box-shadow: 0 0 0 0.2rem rgba(79,21,61,0.25);
+}
+
+/* WhatsApp flotante */
+.floating-whatsapp {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25d366 !important;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Responsive para SOBRE MÍ */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .about-img-rect {
+    max-width: 80%;
+    margin: 2rem auto 0;
+  }
+  .about-cta,
+  .about-greeting {
+    text-align: center;
+  }
 }

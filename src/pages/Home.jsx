@@ -1,5 +1,4 @@
 // src/pages/Home.jsx
-
 import React, { useState, useEffect } from 'react';
 import {
   Container,
@@ -9,46 +8,140 @@ import {
   Form,
   FloatingLabel,
   Alert,
-  Carousel
+  Carousel,
+  Card
 } from 'react-bootstrap';
+import {
+  BsFillAwardFill,
+  BsCheckCircle,
+  BsPeopleFill,
+  BsGlobe,
+  BsWhatsapp,
+  BsSpeedometer2,
+  BsPersonCheck,
+  BsChatDots
+} from 'react-icons/bs';
 
-const imgs = [
+/** Env vars */
+const SENDGRID_FN = import.meta.env.VITE_SENDGRID_FN || '/.netlify/functions/send-email';
+const MAILCHIMP_FN = import.meta.env.VITE_MAILCHIMP_FN || '/.netlify/functions/subscribe';
+
+const whatsappNumber = '525567021628';
+const defaultWhatsAppMessage =
+  '¡Hola Ezequiel! Quiero agendar una cita gratuita de asesoría para mi futuro financiero.';
+const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+  defaultWhatsAppMessage
+)}`;
+
+// Reconocimientos para el carousel
+const achievements = [
   'MDRT_Ezequiel.jpeg',
   'MDRT_2024_Ezequiel.jpeg',
   'MDRT_2023_Ezequiel.jpeg',
   'ezequiel_oficina_3.jpeg',
-  'ezequiel_oficina_2.jpeg',
   'creciendo_juntos_2024.jpeg',
-  'convencion_internacional_Roma_2024.jpeg',
-  'campeones_metlife_ezequiel_esposa.jpeg',
-  'campeon_metalife_2024.png'
+  'convencion_internacional_Roma_2024.jpeg'
+];
+const chunk = (arr, n) => {
+  const out = [];
+  for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+  return out;
+};
+const getCols = () => (window.innerWidth < 576 ? 1 : 3);
+
+// Datos para “Sobre mí”
+const aboutItems = [
+  {
+    Icon: BsFillAwardFill,
+    title: 'Pertenezco al 3% de los mejores asesores financieros',
+    text:
+      'A nivel global, he ayudado a cientos de clientes a proteger y hacer crecer su patrimonio con soluciones a la medida.'
+  },
+  {
+    Icon: () => (
+      <img
+        src="/assets/mdrt_logo_recolor.png"
+        alt="MDRT"
+        className="mdrt-logo"
+      />
+    ),
+    title: 'Miembro de la MDRT',
+    text: '“Million Dollar Round Table” desde 2023.'
+  },
+  {
+    Icon: () => (
+      <img
+        src="/assets/de_la_o_logo_recolor.png"
+        alt="GPO de la O"
+        className="gpo-logo"
+      />
+    ),
+    title: 'Miembro del consejo de GPO',
+    text: 'Grupo de la O y Asociados, aportando al desarrollo del sector.'
+  },
+  {
+    Icon: BsGlobe,
+    title: 'Nacional e internacional',
+    text: 'Participo en convenciones y congresos en México, Europa y América.'
+  },
+  {
+    Icon: BsCheckCircle,
+    title: 'Mi misión es ayudarte a construir una estrategia sólida',
+    text:
+      'de ahorro, inversión y protección para el cumplimiento de tus metas en el corto, mediano y largo plazo.'
+  }
 ];
 
-// Función para dividir en grupos
-const chunkImages = (arr, size) => {
-  const chunks = [];
-  for (let i = 0; i < arr.length; i += size) {
-    chunks.push(arr.slice(i, i + size));
+// Beneficios
+const benefits = [
+  {
+    Icon: BsCheckCircle,
+    title: 'Experiencia',
+    text:
+      'Pertenezco al exclusivo 3% de asesores financieros a nivel global y soy miembro de MDRT.'
+  },
+  {
+    Icon: BsSpeedometer2,
+    title: 'Rapidez',
+    text: 'Procesos ágiles y eficientes.'
+  },
+  {
+    Icon: BsPersonCheck,
+    title: 'Personalizado',
+    text: 'Estrategias a tu medida.'
+  },
+  {
+    Icon: BsChatDots,
+    title: 'Seguimiento',
+    text: 'Soporte continuo tras tu cita.'
   }
-  return chunks;
+];
+
+// Testimonios
+const mainTestimonial = {
+  img: '/assets/ezequiel_clienta_quetzalli.jpeg',
+  name: 'Quetzalli Pacheco',
+  text:
+    '“Gracias a Ezequiel comprendí mis opciones de seguro y ahora ahorro para mi futuro.”'
 };
+const otherTestimonials = [
+  { icon: BsPersonCheck, name: 'Ana López', text: 'Excelente atención y seguimiento.' },
+  { icon: BsPersonCheck, name: 'Luis Martínez', text: 'Me ayudó a entender mis pólizas.' },
+  { icon: BsPersonCheck, name: 'María Pérez', text: 'Proceso sencillo y muy profesional.' },
+  { icon: BsPersonCheck, name: 'Carlos Ruiz', text: 'Recomiendo su asesoría al 100%.' },
+  { icon: BsPersonCheck, name: 'Sofía Gómez', text: 'Muy satisfecho con los resultados.' }
+];
 
-// Devuelve 1 en móvil (<576px), 3 en desktop
-const getChunkSize = () => (window.innerWidth < 576 ? 1 : 3);
-
-const Home = () => {
+export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
   const [status, setStatus] = useState(null);
-  const [chunkSize, setChunkSize] = useState(getChunkSize());
+  const [cols, setCols] = useState(getCols());
 
-  // Recalcular chunkSize al cambiar el ancho de la ventana
   useEffect(() => {
-    const handleResize = () => setChunkSize(getChunkSize());
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const onResize = () => setCols(getCols());
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, []);
-
-  const slides = chunkImages(imgs, chunkSize);
 
   const handleChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -57,148 +150,231 @@ const Home = () => {
     e.preventDefault();
     setStatus('loading');
     try {
-      const res = await fetch('/.netlify/functions/subscribe', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(formData)
+      const mc = await fetch(MAILCHIMP_FN, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       });
-      const data = await res.json();
-      if (res.ok) setStatus('success');
-      else setStatus(`error: ${data.error}`);
-    } catch {
-      setStatus('error: Error en el servidor.');
+      if (!mc.ok) throw new Error('Mailchimp');
+      const sg = await fetch(SENDGRID_FN, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: formData.email,
+          subject: 'Confirmación de cita con Ezequiel',
+          text: `Hola ${formData.name},\n\nGracias por agendar tu cita gratuita. Nos vemos pronto.`
+        })
+      });
+      if (!sg.ok) throw new Error('SendGrid');
+      setStatus('success');
+      setTimeout(() => (window.location.href = whatsappLink), 1500);
+    } catch (err) {
+      console.error(err);
+      setStatus(
+        err.message === 'Mailchimp'
+          ? 'error: No se pudo suscribir. Intenta de nuevo.'
+          : 'error: No se pudo enviar email.'
+      );
     }
   };
+
+  const slides = chunk(achievements, cols);
 
   return (
     <>
       {/* Hero */}
-      <Container fluid className="section-header animate__animated animate__fadeInUp">
-        <Row>
-          <Col className="text-center">
-            <h1 className="title">Masterclass: Libertad Financiera</h1>
-            <p className="subtitle">
-              Descubre estrategias comprobadas para transformar tu futuro financiero.
-            </p>
-            <Button variant="" className="btn-cta">
-              ¡Quiero asegurar mi futuro!
+      <Container fluid className="section-header text-center">
+        <h1 className="display-4 fw-bold mb-3 text-white">
+          Protege tu patrimonio hoy
+        </h1>
+        <p className="lead mb-4 text-white">
+          Asesoría en seguros y finanzas. Agenda tu cita gratis en un clic.
+        </p>
+        <Button href={whatsappLink} target="_blank" className="btn-cta btn-lg">
+          📲 Agenda tu cita
+        </Button>
+      </Container>
+
+      {/* SOBRE MÍ */}
+      <Container className="section-about-me">
+        <Row className="align-items-center">
+          {/* Texto + saludo */}
+          <Col xs={12} md={6}>
+            <h2 className="greeting mb-4">
+              Hola soy <strong>Ezequiel Treviño Buenrostro</strong><br/>
+              asesor financiero y de seguros
+            </h2>
+            <div className="about-grid">
+              {aboutItems.map((item, i) => {
+                const IconComponent = item.Icon;
+                return (
+                  <div className="about-grid-item" key={i}>
+                    <div className="icon-circle">
+                      <IconComponent size={32} color="#4f153d" />
+                    </div>
+                    <div className="about-text">
+                      <h4>{item.title}</h4>
+                      <p>{item.text}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <h2 className="about-cta">
+              ¿Te gustaría agendar una cita gratuita conmigo para empezar a construir tu futuro financiero?
+            </h2>
+            <Button href={whatsappLink} target="_blank" className="btn-cta btn-lg mt-2">
+              📲 Agendar cita
             </Button>
+          </Col>
+
+          {/* Imagen rectangular */}
+          <Col xs={12} md={6} className="text-center">
+            <img
+              src="/assets/ezequiel_oficina.jpeg"
+              alt="Ezequiel en oficina"
+              className="about-img-rect"
+            />
           </Col>
         </Row>
       </Container>
 
-      {/* Sobre mí */}
-      <Container className="section-about animate__animated animate__fadeInUp">
-        <Row className="align-items-center mb-4">
-          <Col md={6}>
-            <h1>Sobre mí</h1>
-            <p>
-              ¡Hola! soy <strong>Ezequiel Treviño</strong>, pertenezco al exclusivo
-              3% de los mejores agentes financieros a nivel global y fui reconocido por
-              mi participación en la reunión anual del Million Dollar Round Table MDRT 2024.
-              Con 8 años de experiencia protejo tu patrimonio y hago crecer tu dinero. En 2024
-              fui galardonado como Campeón Nacional VIDA por MetLife. Mi pasión es ayudarte a
-              alcanzar la libertad financiera que siempre has soñado.
-            </p>
-            <h3>
-              <strong>
-                Por eso te invito a mi Masterclass gratuita, donde compartiré estrategias
-                comprobadas para transformar tu futuro financiero. ¡No te lo pierdas!
-              </strong>
-            </h3>
-          </Col>
-          <Col md={6} className="text-center">
-            <img
-              src="/assets/ezequiel_oficina.jpeg"
-              alt="Ezequiel en oficina"
-              className="about-main-img"
-            />
+      {/* Beneficios */}
+      <Container className="section-benefits text-center">
+        <h2 className="mb-5">Beneficios</h2>
+        <Row className="gx-4 gy-4 justify-content-center">
+          {benefits.map((item, i) => {
+            const IconComp = item.Icon;
+            return (
+              <Col key={i} xs={12} md={3} className="d-flex">
+                <Card className="benefit-card p-4">
+                  <IconComp className="benefit-icon mb-3" />
+                  <Card.Title>{item.title}</Card.Title>
+                  <Card.Text>{item.text}</Card.Text>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
+      </Container>
+
+      {/* Reconocimientos */}
+      <Container className="section-about py-5 text-center">
+        <h2 className="mb-4">Reconocimientos</h2>
+        <Carousel interval={4000} indicators={false} className="shadow-sm">
+          {slides.map((group, idx) => (
+            <Carousel.Item key={idx}>
+              <Row className="gx-3">
+                {group.map(img => (
+                  <Col key={img} xs={12 / cols} className="p-2">
+                    <img
+                      src={`/assets/${img}`}
+                      alt={img}
+                      className="img-fluid rounded-3"
+                    />
+                  </Col>
+                ))}
+              </Row>
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </Container>
+
+      {/* Testimonios */}
+      <Container className="section-testimonials text-center">
+        <h2 className="mb-5">Testimonios</h2>
+        <Row className="justify-content-center mb-4">
+          <Col xs={12} md={6}>
+            <Card className="testimonial-card p-4">
+              <img
+                src={mainTestimonial.img}
+                alt={mainTestimonial.name}
+                className="testimonial-img-large mx-auto"
+              />
+              <blockquote className="blockquote my-3">
+                {mainTestimonial.text}
+              </blockquote>
+              <footer className="blockquote-footer">{mainTestimonial.name}</footer>
+            </Card>
           </Col>
         </Row>
-
-        {/* Carousel estándar, 3 en desktop / 1 en móvil */}
-        <Row>
-          <Col>
-            <Carousel interval={3000} indicators={false}>
-              {slides.map((group, idx) => (
-                <Carousel.Item key={idx}>
-                  <Row className="g-0">
-                    {group.map(img => (
-                      <Col key={img} xs={12 / chunkSize} className="p-0">
-                        <div className="about-thumb-container">
-                          <img
-                            src={`/assets/${img}`}
-                            alt={img}
-                            className="about-thumb-img"
-                          />
-                        </div>
-                      </Col>
-                    ))}
-                  </Row>
-                </Carousel.Item>
-              ))}
-            </Carousel>
-          </Col>
+        <Row className="gx-4 gy-4 justify-content-center">
+          {otherTestimonials.map(({ icon, name, text }, i) => {
+            const IconTest = icon;
+            return (
+              <Col key={i} xs={12} md={4} lg={3}>
+                <Card className="testimonial-card p-3">
+                  <IconTest className="testimonial-icon mb-2" />
+                  <Card.Text>"{text}"</Card.Text>
+                  <Card.Subtitle className="mt-2 text-muted">— {name}</Card.Subtitle>
+                </Card>
+              </Col>
+            );
+          })}
         </Row>
       </Container>
 
       {/* Formulario */}
-      <Container className="section-form animate__animated animate__fadeInUp">
-        <Row>
-          <Col>
-            <h3 className="text-center">Regístrate para la Masterclass</h3>
-            <div className="form-container mx-auto">
-              <Form onSubmit={handleSubmit}>
-                <FloatingLabel label="Nombre Completo" className="mb-3">
-                  <Form.Control
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Nombre Completo"
-                  />
-                </FloatingLabel>
-                <FloatingLabel label="Correo Electrónico" className="mb-3">
-                  <Form.Control
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Correo Electrónico"
-                  />
-                </FloatingLabel>
-                <FloatingLabel label="Teléfono" className="mb-3">
-                  <Form.Control
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="Teléfono"
-                  />
-                </FloatingLabel>
-                <Button type="submit" className="btn-primary">
-                  Inscribirme
-                </Button>
-              </Form>
-              {status === 'loading' && (
-                <Alert variant="info" className="mt-3">
-                  Enviando...
-                </Alert>
-              )}
+      <Container className="section-form text-center">
+        <h2 className="mb-5">Agenda tu cita</h2>
+        <Row className="justify-content-center">
+          <Col xs={12} md={6}>
+            <Form onSubmit={handleSubmit} className="form-card p-4">
+              <FloatingLabel label="Nombre Completo" className="mb-3">
+                <Form.Control
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Nombre Completo"
+                  required
+                />
+              </FloatingLabel>
+              <FloatingLabel label="Correo Electrónico" className="mb-3">
+                <Form.Control
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Correo Electrónico"
+                  required
+                />
+              </FloatingLabel>
+              <FloatingLabel label="Teléfono" className="mb-3">
+                <Form.Control
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="Teléfono"
+                  required
+                />
+              </FloatingLabel>
+              <Button type="submit" className="btn-cta btn-lg w-100 mb-3">
+                Enviar y agendar
+              </Button>
+              {status === 'loading' && <Alert variant="info">Enviando...</Alert>}
               {status === 'success' && (
-                <Alert variant="success" className="mt-3">
-                  ¡Inscripción exitosa!
+                <Alert variant="success">
+                  ¡Registro exitoso! Serás redirigido a WhatsApp.
                 </Alert>
               )}
               {status?.startsWith('error') && (
-                <Alert variant="danger" className="mt-3">
-                  {status}
-                </Alert>
+                <Alert variant="danger">{status.replace('error: ', '')}</Alert>
               )}
-            </div>
+            </Form>
           </Col>
         </Row>
       </Container>
+
+      {/* WhatsApp flotante */}
+      <Button
+        as="a"
+        href={whatsappLink}
+        target="_blank"
+        className="floating-whatsapp"
+        aria-label="Chat por WhatsApp"
+      >
+        <BsWhatsapp size={32} color="#fff" />
+      </Button>
     </>
   );
-};
-
-export default Home;
+}
