@@ -123,6 +123,12 @@ const mainTestimonial = {
   text:
     '“Gracias a Ezequiel comprendí mis opciones de seguro y ahora ahorro para mi futuro.”'
 };
+const ferTestimonial = {
+  img: '/assets/testimonial_Fer_De_Gante.jpeg',
+  name: 'Fer De Gante',
+  text:
+    '“La asesoría de Ezequiel me permitió optimizar mis inversiones y proteger a mi familia.”'
+};
 const otherTestimonials = [
   { icon: BsPersonCheck, name: 'Ana López', text: 'Excelente atención y seguimiento.' },
   { icon: BsPersonCheck, name: 'Luis Martínez', text: 'Me ayudó a entender mis pólizas.' },
@@ -197,7 +203,6 @@ export default function Home() {
       {/* SOBRE MÍ */}
       <Container className="section-about-me">
         <Row className="align-items-center">
-          {/* Texto + saludo */}
           <Col xs={12} md={6}>
             <h2 className="greeting mb-4">
               Hola soy <strong>Ezequiel Treviño Buenrostro</strong><br/>
@@ -226,8 +231,6 @@ export default function Home() {
               📲 Agendar cita
             </Button>
           </Col>
-
-          {/* Imagen rectangular */}
           <Col xs={12} md={6} className="text-center">
             <img
               src="/assets/ezequiel_oficina.jpeg"
@@ -282,21 +285,27 @@ export default function Home() {
       {/* Testimonios */}
       <Container className="section-testimonials text-center">
         <h2 className="mb-5">Testimonios</h2>
+
+        {/* Principales */}
         <Row className="justify-content-center mb-4">
-          <Col xs={12} md={6}>
-            <Card className="testimonial-card p-4">
-              <img
-                src={mainTestimonial.img}
-                alt={mainTestimonial.name}
-                className="testimonial-img-large mx-auto"
-              />
-              <blockquote className="blockquote my-3">
-                {mainTestimonial.text}
-              </blockquote>
-              <footer className="blockquote-footer">{mainTestimonial.name}</footer>
-            </Card>
-          </Col>
+          {[mainTestimonial, ferTestimonial].map((t, i) => (
+            <Col key={i} xs={12} md={6}>
+              <Card className="testimonial-card p-4 mb-4">
+                <img
+                  src={t.img}
+                  alt={t.name}
+                  className="testimonial-img-large mx-auto"
+                />
+                <blockquote className="blockquote my-3">
+                  {t.text}
+                </blockquote>
+                <footer className="blockquote-footer">{t.name}</footer>
+              </Card>
+            </Col>
+          ))}
         </Row>
+
+        {/* Secundarios */}
         <Row className="gx-4 gy-4 justify-content-center">
           {otherTestimonials.map(({ icon, name, text }, i) => {
             const IconTest = icon;
