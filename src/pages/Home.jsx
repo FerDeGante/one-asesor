@@ -125,7 +125,7 @@ const mainTestimonial = {
 };
 const ferTestimonial = {
   img: '/assets/testimonial_Fer_De_Gante.jpeg',
-  name: 'Fer De Gante',
+  name: 'Fernando De Gante',
   text:
     '“La asesoría de Ezequiel me permitió optimizar mis inversiones y proteger a mi familia.”'
 };
