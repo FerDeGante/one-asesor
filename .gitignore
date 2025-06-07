@@ -25,3 +25,119 @@ dist-ssr
 
 # Local Netlify folder
 .netlify
+# Dependency directories
+bower_components/
+jspm_packages/
+
+# Build output
+build/
+out/
+coverage/
+coverage-final.json
+
+# Environment files
+.env
+.env.*.local
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Miscellaneous
+*.tgz
+*.gz
+*.zip
+*.7z
+*.bak
+*.tmp
+*.pid
+*.seed
+*.log.[0-9]*
+*.orig
+
+# SASS cache
+.sass-cache/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Parcel-bundler cache
+.cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build output
+.nuxt
+
+# Vuepress build output
+.vuepress/dist
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# Mac system files
+.AppleDouble
+.LSOverride
+
+# Windows image file caches
+ehthumbs.db
+
+# Windows shortcut files
+*.lnk
+
+# IDEs and editors
+*.code-workspace
+*.sublime-workspace
+*.sublime-project
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# VS Code settings
+.history/
+.vscode-test/
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Firebase cache
+.firebase/
+
+# SvelteKit build output
+.svelte-kit
+
+# Remix build output
+.build
+
+# TurboRepo
+.turbo
+
+# Bun
+.bun
+
+# Playwright
+playwright-report/
+test-results/

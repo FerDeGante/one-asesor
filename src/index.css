@@ -160,6 +160,32 @@ body {
   color: #4f153d;
   margin-bottom: 0.5rem;
 }
+.testimonial-main {
+  background: #f6d3c5;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.testimonial-main-img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 1rem auto;
+}
+.testimonial-main .lead {
+  font-size: 1.25rem;
+  color: #1e0139;
+}
+@media (max-width: 768px) {
+  .testimonial-main {
+    text-align: center;
+  }
+  .testimonial-main .text-end {
+    text-align: center !important;
+  }
+}
 
 /* Formulario */
 .section-form {

@@ -11,9 +11,9 @@ const Footer = () => (
         {/* Logo */}
         <Col xs={12} md={4} className="text-center text-md-start mb-3 mb-md-0">
           <img
-            src="/assets/one_logo_largo_transparent.png"
+            src="/assets/one_logo.png"
             alt="One Asesores por Ezequiel Treviño"
-            height="60"
+            height="150"
           />
         </Col>
 

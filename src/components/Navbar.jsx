@@ -9,9 +9,9 @@ const NavBarComponent = ({ scrolled }) => (
     <Container className="justify-content-center">
       <Navbar.Brand href="/">
         <img
-          src="/assets/one_logo_largo_transparent.png"
+          src="/assets/one_logo.png"
           alt="One Asesores por Ezequiel Treviño"
-          height="60"
+          height="150"
         />
       </Navbar.Brand>
     </Container>
