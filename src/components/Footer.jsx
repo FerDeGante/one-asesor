@@ -13,7 +13,6 @@ const Footer = () => (
           <img
             src="/assets/one_logo.png"
             alt="One Asesores por Ezequiel Treviño"
-            height="150"
           />
         </Col>
 
@@ -24,7 +23,7 @@ const Footer = () => (
           </small>
         </Col>
 
-        {/* Redes sociales: Instagram + TikTok */}
+        {/* Redes sociales */}
         <Col xs={12} md={4} className="text-center text-md-end">
           <span className="me-2">Sígueme en mis redes sociales</span>
           <a
@@ -34,7 +33,7 @@ const Footer = () => (
             className="mx-1"
             aria-label="Instagram"
           >
-            <FaInstagram size={20} />
+            <FaInstagram size={22} />
           </a>
           <a
             href="https://www.tiktok.com/@one_asesor"
@@ -43,7 +42,7 @@ const Footer = () => (
             className="mx-1"
             aria-label="TikTok"
           >
-            <SiTiktok size={20} />
+            <SiTiktok size={22} />
           </a>
         </Col>
       </Row>

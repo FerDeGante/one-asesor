@@ -237,3 +237,32 @@ body {
     text-align: center;
   }
 }
+
+.footer-custom {
+  background-color: #4f153d; /* Fondo profundo */
+  color: #f6d3c5;            /* Texto claro */
+  padding: 2rem 1rem;
+  font-size: 0.95rem;
+}
+
+.footer-custom a {
+  color: #f6d3c5;
+  transition: color 0.3s;
+  text-decoration: none;
+}
+
+.footer-custom a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.footer-custom small {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.footer-custom img {
+  max-height: 80px;
+  object-fit: contain;
+}
+
