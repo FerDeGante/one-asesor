@@ -295,7 +295,7 @@ export default function Home() {
         </Container>
 
         <Container className="section-form text-center">
-          <h2 className="mb-5">Agenda tu cita</h2>
+          <h2 className="mb-5">Únete al equipo</h2>
           <Row className="justify-content-center">
             <Col xs={12} md={6}>
               <Form onSubmit={handleSubmit} className="form-card p-4">
