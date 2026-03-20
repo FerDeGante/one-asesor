@@ -8,22 +8,18 @@ const Footer = () => (
   <footer className="footer-custom">
     <Container>
       <Row className="align-items-center">
-        {/* Logo */}
         <Col xs={12} md={4} className="text-center text-md-start mb-3 mb-md-0">
           <img
-            src="/assets/one_logo.png"
+            src="/assets/logo-fondo-blanco-purpura.jpeg"
             alt="One Asesores por Ezequiel Treviño"
+            className="footer-logo"
           />
         </Col>
-
-        {/* Términos y año */}
         <Col xs={12} md={4} className="text-center mb-3 mb-md-0">
           <small>
-            Términos y Condiciones | One-Asesor &copy; {new Date().getFullYear()}
+            One-Asesores &copy; {new Date().getFullYear()}
           </small>
         </Col>
-
-        {/* Redes sociales */}
         <Col xs={12} md={4} className="text-center text-md-end">
           <span className="me-2">Sígueme en mis redes sociales</span>
           <a

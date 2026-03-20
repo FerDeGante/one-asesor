@@ -3,15 +3,15 @@ import { Navbar, Container } from 'react-bootstrap';
 
 const NavBarComponent = ({ scrolled }) => (
   <Navbar
-    variant="dark"
+    variant="light"
     className={`navbar-custom ${scrolled ? 'scrolled' : ''}`}
   >
     <Container className="justify-content-center">
       <Navbar.Brand href="/">
         <img
-          src="/assets/one_logo.png"
+          src="/assets/logo-fondo-blanco-purpura.jpeg"
           alt="One Asesores por Ezequiel Treviño"
-          height="150"
+          className="brand-logo"
         />
       </Navbar.Brand>
     </Container>
