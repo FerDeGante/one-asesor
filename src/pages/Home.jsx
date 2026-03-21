@@ -24,9 +24,6 @@ import {
   BsShieldCheck
 } from 'react-icons/bs';
 
-const SENDGRID_FN = import.meta.env.VITE_SENDGRID_FN || '/.netlify/functions/send-email';
-const MAILCHIMP_FN = import.meta.env.VITE_MAILCHIMP_FN || '/.netlify/functions/subscribe';
-
 const whatsappNumber = '525567021628';
 const defaultWhatsAppMessage =
   '¡Hola Ezequiel! Quiero agendar una cita gratuita de asesoría para mi futuro financiero.';
@@ -225,38 +222,17 @@ export default function Home() {
     });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    setStatus('loading');
-    try {
-      const mc = await fetch(MAILCHIMP_FN, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-      if (!mc.ok) throw new Error('Mailchimp');
-
-      const sg = await fetch(SENDGRID_FN, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          to: formData.email,
-          subject: 'Confirmación de cita con Ezequiel',
-          text: `Hola ${formData.name},\n\nGracias por agendar tu cita gratuita. Nos vemos pronto.`
-        })
-      });
-      if (!sg.ok) throw new Error('SendGrid');
-
-      setStatus('success');
-      setTimeout(() => (window.location.href = whatsappLink), 1500);
-    } catch (err) {
-      console.error(err);
-      setStatus(
-        err.message === 'Mailchimp'
-          ? 'error: No se pudo suscribir. Intenta de nuevo.'
-          : 'error: No se pudo enviar email.'
-      );
-    }
+    const { name, email, phone } = formData;
+    const message =
+      `¡Hola Ezequiel! Me interesa agendar una cita gratuita de asesoría.\n\n` +
+      `Nombre: ${name}\n` +
+      `Correo: ${email}\n` +
+      `Teléfono: ${phone}`;
+    const link = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    setStatus('success');
+    setTimeout(() => window.open(link, '_blank'), 800);
   };
 
   const currentTestimonial = allTestimonials[activeTestimonial];
