@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Container,
   Row,
@@ -7,17 +7,20 @@ import {
   Form,
   FloatingLabel,
   Alert,
-  Carousel,
   Card
 } from 'react-bootstrap';
 import {
   BsFillAwardFill,
   BsCheck2Circle,
   BsGlobe,
+  BsPauseFill,
+  BsPlayFill,
   BsWhatsapp,
   BsPiggyBank,
   BsPersonCheck,
   BsChatDots,
+  BsChevronLeft,
+  BsChevronRight,
   BsShieldCheck
 } from 'react-icons/bs';
 
@@ -32,20 +35,37 @@ const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
 )}`;
 
 const achievements = [
-  'MDRT_Ezequiel.jpeg',
-  'MDRT_2024_Ezequiel.jpeg',
-  'MDRT_2023_Ezequiel.jpeg',
-  'creciendo_juntos_2024.jpeg',
-  'convencion_internacional_Roma_2024.jpeg'
+  {
+    src: 'MDRT_Ezequiel.jpeg',
+    alt: 'Reconocimiento MDRT de Ezequiel',
+    variant: 'wide'
+  },
+  {
+    src: 'MDRT_2024_Ezequiel.jpeg',
+    alt: 'Participacion de Ezequiel en MDRT 2024',
+    variant: 'tall'
+  },
+  {
+    src: 'MDRT_2023_Ezequiel.jpeg',
+    alt: 'Participacion de Ezequiel en MDRT 2023',
+    variant: 'wide'
+  },
+  {
+    src: 'creciendo_juntos_2024.jpeg',
+    alt: 'Evento Creciendo Juntos 2024',
+    variant: 'medium'
+  },
+  {
+    src: 'convencion_internacional_Roma_2024.jpeg',
+    alt: 'Convencion Internacional Roma 2024',
+    variant: 'small'
+  },
+  {
+    src: 'promotor-one-asesores.jpeg',
+    alt: 'Otorgamiento de reconocimiento de promotor One Asesores',
+    variant: 'medium'
+  }
 ];
-
-const chunk = (arr, n) => {
-  const out = [];
-  for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
-  return out;
-};
-
-const getCols = () => (window.innerWidth < 576 ? 1 : 3);
 
 const aboutItems = [
   {
@@ -113,33 +133,97 @@ const benefits = [
   }
 ];
 
-const mainTestimonial = {
-  img: '/assets/ezequiel_clienta_quetzalli.jpeg',
-  name: 'Quetzalli Pacheco',
-  text:
-    '“Gracias a Ezequiel comprendí mis opciones de seguro y ahora ahorro para mi futuro.”'
-};
+const featuredTestimonials = [
+  {
+    img: '/assets/ezequiel_clienta_quetzalli.jpeg',
+    name: 'Quetzalli Pacheco',
+    text:
+      '“Yo llegué con muchas dudas y Ezequiel me explicó todo con muchísima paciencia. Me ayudó a tomar una decisión que sí iba con mi realidad y eso me dio tranquilidad.”'
+  },
+  {
+    img: '/assets/fernando.jpeg',
+    name: 'Fernando De Gante',
+    text:
+      '“Lo que más me gustó fue que primero entendió lo que yo necesitaba y después me propuso opciones claras. Todo el proceso se sintió profesional y muy humano.”'
+  }
+];
 
-const ferTestimonial = {
-  img: '/assets/fernando.jpeg',
-  name: 'Fernando De Gante',
-  text:
-    '“La asesoría de Ezequiel me permitió optimizar mis inversiones y proteger a mi familia.”'
-};
+const secondaryTestimonials = [
+  {
+    img: '/assets/Valeria-castro.jpeg',
+    name: 'Valeria Castro',
+    text:
+      '“Me sentí muy acompañada desde la primera llamada. Ezequiel aterriza las cosas a tu situación y te ayuda a decidir sin presionarte.”'
+  },
+  {
+    img: '/assets/Marco-pardo.jpeg',
+    name: 'Marco Pardo',
+    text:
+      '“Se nota la experiencia. Me explicó cada opción de forma sencilla y eso me ayudó a contratar con confianza, entendiendo realmente lo que estaba haciendo.”'
+  },
+  {
+    img: '/assets/Andre-tapia.jpeg',
+    name: 'Andre Tapia',
+    text:
+      '“Yo veía estos temas como algo complicado, pero con Ezequiel todo fue mucho más claro. Me ayudó a ordenar prioridades y a pensar mejor en el futuro.”'
+  }
+];
+
+const allTestimonials = [...featuredTestimonials, ...secondaryTestimonials];
+const TESTIMONIAL_INTERVAL_MS = 7200;
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
   const [status, setStatus] = useState(null);
-  const [cols, setCols] = useState(getCols());
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [isTestimonialsPlaying, setIsTestimonialsPlaying] = useState(true);
+  const recognitionTrackRef = useRef(null);
+  const [canScrollRecognitionsPrev, setCanScrollRecognitionsPrev] = useState(false);
+  const [canScrollRecognitionsNext, setCanScrollRecognitionsNext] = useState(true);
 
   useEffect(() => {
-    const onResize = () => setCols(getCols());
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
+    if (!isTestimonialsPlaying) return undefined;
+
+    const intervalId = window.setInterval(() => {
+      setActiveTestimonial(current => (current + 1) % allTestimonials.length);
+    }, TESTIMONIAL_INTERVAL_MS);
+
+    return () => window.clearInterval(intervalId);
+  }, [activeTestimonial, isTestimonialsPlaying]);
+
+  useEffect(() => {
+    const track = recognitionTrackRef.current;
+    if (!track) return undefined;
+
+    const updateScrollState = () => {
+      const maxScrollLeft = track.scrollWidth - track.clientWidth;
+      setCanScrollRecognitionsPrev(track.scrollLeft > 8);
+      setCanScrollRecognitionsNext(track.scrollLeft < maxScrollLeft - 8);
+    };
+
+    updateScrollState();
+    track.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+
+    return () => {
+      track.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
   }, []);
 
   const handleChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const scrollRecognitions = direction => {
+    const track = recognitionTrackRef.current;
+    if (!track) return;
+
+    const amount = Math.min(track.clientWidth * 0.82, 520);
+    track.scrollBy({
+      left: direction === 'next' ? amount : -amount,
+      behavior: 'smooth'
+    });
+  };
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -175,7 +259,7 @@ export default function Home() {
     }
   };
 
-  const slides = chunk(achievements, cols);
+  const currentTestimonial = allTestimonials[activeTestimonial];
 
   return (
     <>
@@ -220,7 +304,7 @@ export default function Home() {
                 ¿Te gustaría agendar una cita gratuita conmigo para empezar a construir tu futuro financiero?
               </h2>
               <Button href={whatsappLink} target="_blank" className="btn-cta btn-lg mt-2">
-                📲 Únete a tu equipo
+                📲 Agenda cita
               </Button>
             </Col>
             <Col xs={12} md={6} className="text-center">
@@ -253,45 +337,103 @@ export default function Home() {
 
         <Container className="section-about py-5 text-center">
           <h2 className="mb-4">Reconocimientos</h2>
-          <Carousel interval={4000} indicators={false} className="shadow-sm">
-            {slides.map((group, idx) => (
-              <Carousel.Item key={idx}>
-                <Row className="gx-3">
-                  {group.map(img => (
-                    <Col key={img} xs={12 / cols} className="p-2">
-                      <img
-                        src={`/assets/${img}`}
-                        alt={img}
-                        className="img-fluid rounded-3"
-                      />
-                    </Col>
-                  ))}
-                </Row>
-              </Carousel.Item>
-            ))}
-          </Carousel>
+          <div className="recognition-carousel-shell">
+            <div className="recognition-carousel-track" ref={recognitionTrackRef}>
+              {achievements.map(item => (
+                <article
+                  key={item.src}
+                  className={`recognition-card recognition-card--${item.variant}`}
+                >
+                  <img
+                    src={`/assets/${item.src}`}
+                    alt={item.alt}
+                    className="recognition-photo"
+                  />
+                </article>
+              ))}
+            </div>
+
+            <div className="recognition-carousel-controls" aria-label="Controles de reconocimientos">
+              <button
+                type="button"
+                className="recognition-carousel-button"
+                onClick={() => scrollRecognitions('prev')}
+                disabled={!canScrollRecognitionsPrev}
+                aria-label="Ver reconocimientos anteriores"
+              >
+                <BsChevronLeft />
+              </button>
+
+              <button
+                type="button"
+                className="recognition-carousel-button"
+                onClick={() => scrollRecognitions('next')}
+                disabled={!canScrollRecognitionsNext}
+                aria-label="Ver más reconocimientos"
+              >
+                <BsChevronRight />
+              </button>
+            </div>
+          </div>
         </Container>
 
         <Container className="section-testimonials text-center">
           <h2 className="mb-5">Testimonios</h2>
-
-          <Row className="justify-content-center mb-4">
-            {[mainTestimonial, ferTestimonial].map((t, i) => (
-              <Col key={i} xs={12} md={6}>
-                <Card className="testimonial-card p-4 mb-4">
+          <div
+            className="testimonial-slider-shell"
+            style={{ '--testimonial-progress-duration': `${TESTIMONIAL_INTERVAL_MS}ms` }}
+          >
+            <div className="testimonial-slide-card">
+              <Row className="align-items-center g-4 g-lg-5">
+                <Col xs={12} lg={5} className="text-center">
                   <img
-                    src={t.img}
-                    alt={t.name}
-                    className="testimonial-img-large mx-auto"
+                    src={currentTestimonial.img}
+                    alt={currentTestimonial.name}
+                    className="testimonial-slide-image"
                   />
-                  <blockquote className="blockquote my-3">
-                    {t.text}
-                  </blockquote>
-                  <footer className="blockquote-footer">{t.name}</footer>
-                </Card>
-              </Col>
-            ))}
-          </Row>
+                </Col>
+                <Col xs={12} lg={7}>
+                  <div className="testimonial-slide-content">
+                    <blockquote className="testimonial-slide-quote">
+                      {currentTestimonial.text}
+                    </blockquote>
+                    <footer className="testimonial-slide-author">
+                      {currentTestimonial.name}
+                    </footer>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+
+            <div className="testimonial-slider-controls" aria-label="Controles de testimonios">
+              <div className="testimonial-slider-dots" role="tablist" aria-label="Seleccionar testimonio">
+                {allTestimonials.map((testimonial, index) => (
+                  <button
+                    key={testimonial.name}
+                    type="button"
+                    className={`testimonial-dot ${index === activeTestimonial ? 'active' : ''} ${
+                      index === activeTestimonial && isTestimonialsPlaying ? 'playing' : ''
+                    }`}
+                    onClick={() => setActiveTestimonial(index)}
+                    aria-label={`Ver testimonio de ${testimonial.name}`}
+                    aria-selected={index === activeTestimonial}
+                    role="tab"
+                  >
+                    <span className="testimonial-dot-fill" />
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="testimonial-play-toggle"
+                onClick={() => setIsTestimonialsPlaying(current => !current)}
+                aria-label={isTestimonialsPlaying ? 'Pausar carrusel de testimonios' : 'Reproducir carrusel de testimonios'}
+              >
+                {isTestimonialsPlaying ? <BsPauseFill /> : <BsPlayFill />}
+              </button>
+            </div>
+          </div>
         </Container>
 
         <Container className="section-form text-center">
